@@ -10,23 +10,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/")
 public class MovieController {
 
+    private final MovieServiceAdapter movieServiceAdapter;
+    private final RatingServiceAdapter ratingServiceAdater;
+
+    public MovieController(MovieServiceAdapter movieServiceAdapter, RatingServiceAdapter ratingServiceAdapter) {
+        this.movieServiceAdapter = movieServiceAdapter;
+        this.ratingServiceAdater = ratingServiceAdapter;
+    }
+
     @GetMapping("movies")
     public List<MovieSummary> getMovies() {
-        return Arrays.asList(
-                new MovieSummary(1, "Batman Begins", "https://images-na.ssl-images-amazon.com/images/M/MV5BNTM3OTc0MzM2OV5BMl5BanBnXkFtZTYwNzUwMTI3._V1_SX300.jpg"),
-                new MovieSummary(2, "Ted", "https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ1OTU0ODcxMV5BMl5BanBnXkFtZTcwOTMxNTUwOA@@._V1_SX300.jpg"),
-                new MovieSummary(3, "Inception", "https://images-na.ssl-images-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg")
-        );
+        return movieServiceAdapter.getAll();
     }
 
     @GetMapping("movies/{id}")
     public Movie getMovie(@PathVariable("id") Integer id) {
-        return new Movie(id, "title", "poster", "plot", 2014, "genre", Arrays.asList(new Rating("AlloCine", "18%")));
+        Optional<Movie> movieDetail = movieServiceAdapter.getMovieById(id);
+        List<Rating> ratings = ratingServiceAdater.getRatingsById(id);
+
+        return movieDetail.map(m -> m.setRatings(ratings))
+                .orElseThrow(() -> new MovieNotFoundException("No movie found with id=" + id));
     }
 
 }

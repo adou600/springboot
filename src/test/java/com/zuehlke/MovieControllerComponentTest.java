@@ -38,7 +38,7 @@ public class MovieControllerComponentTest {
                 then().
                 statusCode(200)
                 .body(
-                        "", hasSize(3),
+                        "", hasSize(7),
                         "[0].id", equalTo(1),
                         "id", hasItems(2, 3, 1),
                         "title", hasItems("Inception", "Ted", "Batman Begins"));
@@ -50,8 +50,7 @@ public class MovieControllerComponentTest {
 
         //Attention: if movie is taken, changes in movie will be automatically updated and therefore interface changes will not pop up...
         Movie movie = when().get("/api/v1/movies/" + givenId).as(Movie.class);
-        assertEquals("title", movie.getTitle());
-        assertEquals("poster", movie.getPoster());
+        assertEquals("Batman Begins", movie.getTitle());
         assertEquals(givenId, movie.getId());
 
 

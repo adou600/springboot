@@ -33,4 +33,23 @@ public class MovieSummary {
         return poster;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MovieSummary that = (MovieSummary) o;
+
+        if (id != that.id) return false;
+        if (title != null ? !title.equals(that.title) : that.title != null) return false;
+        return poster != null ? poster.equals(that.poster) : that.poster == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (poster != null ? poster.hashCode() : 0);
+        return result;
+    }
 }
