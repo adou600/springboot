@@ -11,14 +11,5 @@ public class MovieTicketServiceApplication {
 		SpringApplication.run(MovieTicketServiceApplication.class, args);
 	}
 
-	@Bean
-	public MovieServiceAdapter movieServiceAdapter(){
-		return new MovieServiceAdapter("https://movie-service.herokuapp.com/");
-	}
-
-	@Bean
-	public RatingServiceAdapter ratingServiceAdapter(){
-		return new RatingServiceAdapter("https://movie-rating-service.herokuapp.com");
-	}
 
 }
