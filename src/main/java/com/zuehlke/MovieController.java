@@ -3,10 +3,11 @@ package com.zuehlke;
 import com.zuehlke.data.Movie;
 import com.zuehlke.data.MovieSummary;
 import com.zuehlke.data.Rating;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.websocket.server.PathParam;
 import java.util.Arrays;
 import java.util.List;
 
